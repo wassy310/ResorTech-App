@@ -9,10 +9,10 @@ class CameraApp extends StatefulWidget {
   const CameraApp({Key? key, required this.camera}) : super(key: key);
 
   @override
-  _CameraAppState createState() => _CameraAppState();
+  CameraAppState createState() => CameraAppState();
 }
 
-class _CameraAppState extends State<CameraApp> {
+class CameraAppState extends State<CameraApp> {
   late CameraControllerWrapper _cameraWrapper;
   CameraController? _controller;
 
