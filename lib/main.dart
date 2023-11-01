@@ -12,6 +12,7 @@ void main() async {
     MaterialApp(
       theme: ThemeData.dark(),
       home: CameraApp(camera: firstCamera),
+      debugShowCheckedModeBanner: false,
     ),
   );
 }
