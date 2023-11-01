@@ -1,16 +1,62 @@
-# resortech_app
+# ResorTech App
 
-A new Flutter project.
+## ディレクトリ構成
 
-## Getting Started
+### 主要設定ファイル
+```
+android
+├── app
+|   └── build.gradle
+├── build.gradle
+├── resortech_app_android.iml (ignored)
+└── settings.gradle
+```
+```
+[other settings]
+.
+├── analysis_options.yaml
+├── pubspec.yaml
+└── resortech_app.iml
+```
 
-This project is a starting point for a Flutter application.
+### 主要開発(UI)ファイル
+```
+lib
+├── component
+|   └── .
+├── infrastructure
+|   └── .
+├── provider
+|   └── .
+├── view
+|   └── .
+└── main.dart
+```
 
-A few resources to get you started if this is your first Flutter project:
+### `./lib/component/`
+- サイト内で共通して再利用するクラスを管理
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### `./lib/infrastructure/`
+- 通信やDB管理などに関わるクラスを管理
+- バックエンドとの連携処理はここ
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### `./lib/provider/`
+- 状態管理用
+- Riverpodを使用
+
+### `./lib/view/`
+- ページ画面となるクラスを管理
+- 他ファイルで定義したクラスを呼び出すかたちでUIを構築
+
+## 開発環境
+
+|       |     |
+|  :-:  | --- |
+| OS    | Windows 10 Pro, Ubuntu 22.04(LTS) |
+| IDE   | Visual Studio Code |
+| LANG  | Dart (Flutter 3.10.5) |
+| PKG  | [camera](https://pub.dev/packages/camera), [cupertino_icons](https://pub.dev/packages/cupertino_icons) |
+
+## 作成者
+
+[Wassy | Ryoga Washizawa](https://github.com/wassy310)
