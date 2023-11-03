@@ -34,7 +34,17 @@ class CameraAppState extends State<CameraApp> {
       appBar: AppBar(title: const Text('ResorTech App')),
       body: _controller == null
           ? const Center(child: CircularProgressIndicator())
-          : CameraPreview(_controller!),
+          : Column(
+              children: [
+                Expanded(child: CameraPreview(_controller!)),
+                ElevatedButton(
+                  onPressed: () {
+                    _cameraWrapper.sendFrameToResortech();
+                  },
+                  child: const Text('Send Frame'),
+                ),
+              ],
+            ),
     );
   }
 
