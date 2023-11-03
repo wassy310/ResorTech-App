@@ -55,7 +55,7 @@ lib
 | OS    | Windows 10 Pro, Ubuntu 22.04(LTS) |
 | IDE   | Visual Studio Code |
 | LANG  | Dart (Flutter 3.10.5) |
-| PKG  | [camera](https://pub.dev/packages/camera), [cupertino_icons](https://pub.dev/packages/cupertino_icons) |
+| PKG  | [camera](https://pub.dev/packages/camera), [cupertino_icons](https://pub.dev/packages/cupertino_icons), [http](https://pub.dev/packages/http) |
 
 ## 作成者
 
