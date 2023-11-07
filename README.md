@@ -2,7 +2,7 @@
 
 ## ディレクトリ構成
 
-### 主要設定ファイル
+### 主要設定ファイル群
 ```
 android
 ├── app
@@ -19,14 +19,12 @@ android
 └── resortech_app.iml
 ```
 
-### 主要開発(UI)ファイル
+### 主要開発ファイル群
 ```
 lib
 ├── component
 |   └── .
 ├── infrastructure
-|   └── .
-├── provider
 |   └── .
 ├── view
 |   └── .
@@ -40,10 +38,6 @@ lib
 - 通信やDB管理などに関わるクラスを管理
 - バックエンドとの連携処理はここ
 
-### `./lib/provider/`
-- 状態管理用
-- Riverpodを使用
-
 ### `./lib/view/`
 - ページ画面となるクラスを管理
 - 他ファイルで定義したクラスを呼び出すかたちでUIを構築
@@ -52,7 +46,7 @@ lib
 
 |       |     |
 |  :-:  | --- |
-| OS    | Windows 10 Pro, Ubuntu 22.04(LTS) |
+| OS    | Windows 10 Pro |
 | IDE   | Visual Studio Code |
 | LANG  | Dart (Flutter 3.10.5) |
 | PKG  | [camera](https://pub.dev/packages/camera), [cupertino_icons](https://pub.dev/packages/cupertino_icons), [http](https://pub.dev/packages/http) |
