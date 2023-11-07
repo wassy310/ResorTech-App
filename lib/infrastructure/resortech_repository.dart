@@ -1,14 +1,15 @@
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class ResortechRepository {
-  Future<Map<String, dynamic>> fetchResortechData(String resortechId) async {
-    final response = await http.get(Uri.parse(
-        'https://product-api.resortech.com/api/v1/deeplearning/$resortechId'));
-    if (response.statusCode == 200) {
-      return json.decode(response.body) as Map<String, dynamic>;
-    } else {
-      throw Exception('Failed to load data');
-    }
+  static Future<http.Response> postImage(String imagePath) async {
+    final url = Uri.parse('http://localhost:8000/api/v1/predict');
+    final request = http.MultipartRequest('POST', url);
+
+    final file = await http.MultipartFile.fromPath('image', imagePath);
+
+    request.files.add(file);
+
+    final response = await request.send();
+    return await http.Response.fromStream(response);
   }
 }

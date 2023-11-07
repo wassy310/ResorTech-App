@@ -1,68 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'dart:io';
 import 'package:resortech_app/component/cam.dart';
+import 'package:resortech_app/infrastructure/resortech_repository.dart';
 
-class CameraApp extends StatefulWidget {
-  final CameraDescription camera;
-
-  const CameraApp({Key? key, required this.camera}) : super(key: key);
-
+class CameraScreen extends StatefulWidget {
+  const CameraScreen({super.key});
   @override
-  CameraAppState createState() => CameraAppState();
+  CameraScreenState createState() => CameraScreenState();
 }
 
-class CameraAppState extends State<CameraApp> {
-  late CameraControllerWrapper _cameraWrapper;
-  CameraController? _controller;
+class CameraScreenState extends State<CameraScreen> {
+  late CameraController _controller;
+  late List<CameraDescription> cameras;
+  bool isCameraInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    _cameraWrapper = CameraControllerWrapper(widget.camera);
     _initializeCamera();
   }
 
-  _initializeCamera() async {
-    _controller = await _cameraWrapper.initializedController;
-    setState(() {});
+  Future<void> _initializeCamera() async {
+    cameras = await availableCameras();
+    _controller = CameraController(cameras[0], ResolutionPreset.high);
+
+    await _controller.initialize();
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      isCameraInitialized = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!isCameraInitialized) {
+      return const CircularProgressIndicator();
+    }
+
     return Scaffold(
-      appBar: AppBar(title: const Text('ResorTech App')),
-      body: _controller == null
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                Expanded(child: CameraPreview(_controller!)),
-                ElevatedButton(
-                  onPressed: () {
-                    _cameraWrapper.sendFrameToResortech();
-                  },
-                  child: const Text('Send Frame'),
-                ),
-              ],
-            ),
+      appBar: AppBar(
+        title: const Text('Camera App'),
+      ),
+      body: Column(
+        children: <Widget>[
+          AspectRatio(
+            aspectRatio: _controller.value.aspectRatio,
+            child: CameraPreview(_controller),
+          ),
+          CaptureButton(_captureImage),
+        ],
+      ),
     );
+  }
+
+  void _captureImage() async {
+    if (!_controller.value.isInitialized) {
+      return;
+    }
+
+    final XFile image = await _controller.takePicture();
+    final response = await ResortechRepository.postImage(image.path);
+
+    debugPrint(response.body);
   }
 
   @override
   void dispose() {
-    _cameraWrapper.dispose();
+    _controller.dispose();
     super.dispose();
-  }
-}
-
-class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
-
-  const DisplayPictureScreen({Key? key, required this.imagePath})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.file(File(imagePath));
   }
 }
